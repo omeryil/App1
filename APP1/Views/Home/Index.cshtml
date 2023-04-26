@@ -1,0 +1,34 @@
+﻿@model IEnumerable<APP1.Models.user>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    
+</div>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>User Id</td>
+            <td>User Name</td>
+            <td>User Pass</td>
+            <td>Name</td>
+            <td>Surname</td>
+            <td>Role Id</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.username</td>
+                <td>@user.userpass</td>
+                <td>@user.name</td>
+                <td>@user.surname</td>
+                <td>@user.roleId</td>
+            </tr>
+        }
+    </tbody>
+</table>

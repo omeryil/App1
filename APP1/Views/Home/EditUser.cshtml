@@ -1,0 +1,43 @@
+﻿@model APP1.Models.user
+@{
+    ViewData["Title"] = "Edit User";
+    var user = Model;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Edit User</h1>
+
+</div>
+<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="edit">
+    <table>
+        <tr hidden>
+            <td>Id: </td>
+            <td><input type="text" id="Id" name="Id" value="@user.Id" /></td>
+        </tr>
+        <tr>
+            <td>Username: </td>
+            <td><input type="text" id="username" name="username" value="@user.username" /></td>
+        </tr>
+        <tr>
+            <td>Userpass: </td>
+            <td><input type="text" id="userpass" name="userpass" value="@user.userpass" /></td>
+        </tr>
+        <tr>
+            <td>Name: </td>
+            <td><input type="text" id="name" name="name" value="@user.name" /></td>
+        </tr> 
+        <tr>
+            <td>Surname: </td>
+            <td><input type="text" id="surname" name="surname" value="@user.surname" /></td>
+        </tr>
+        <tr>
+            <td>Role Id: </td>
+            <td><input type="text" id="roleId" name="roleId" value="@user.roleId" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+    <hr />
+</form>
