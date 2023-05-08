@@ -10,5 +10,6 @@ namespace APP1
         { }
         public DbSet<user> user { get; set; }
         public DbSet<role> role { get; set; }
+        public DbSet<tests> test { get; set; }
     }
 }

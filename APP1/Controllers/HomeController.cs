@@ -25,12 +25,19 @@ namespace APP1.Controllers
 
             return View(us);
         }
+        [Route("/create")]
+        public IActionResult CreateUser()
+        {
+          
+            return View();
+        }
         //Rollerle kullanıcıları join ederek getirir
         [Route("/withrole/{id?}")]
         public IActionResult WithRole(int id)
         {
             if (id > 0)
             {
+              
                 var list = db.user.Where(m => m.Id == id).Join(db.role, m => m.roleId, n => n.Id, (user, role) => new { User = user, Role = role })
                    .Select(m => new withRoleDTO()
                    {
