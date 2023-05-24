@@ -19,9 +19,14 @@ namespace APP1
              ExampleDBContext db)
         {
             //Session'dan role verisini okudum.
-            string role = httpContext.Session.GetString("role") != null?
-                httpContext.Session.GetString("role"):"";
-          
+            //string role = httpContext.Session.GetString("role") != null?
+            //   httpContext.Session.GetString("role"):"";
+
+            string role = "";
+            if (httpContext.Session.GetString("role") != null) {
+                role = httpContext.Session.GetString("role");
+            }
+
 
             //Boş mu diye check ettim
             if (!String.IsNullOrEmpty(role))
@@ -36,16 +41,16 @@ namespace APP1
                 //Login işleminden sonra her isteği errors'a atar.
                 //Gör diye böyle yaptım.
                 //Aşağıdakini de incele!!!
-                if(!httpContext.Request.Path.ToString().StartsWith("/errors"))
-                    httpContext.Response.Redirect("/errors/403");
+                //if(!httpContext.Request.Path.ToString().StartsWith("/errors"))
+                   // httpContext.Response.Redirect("/errors/403");
             }
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             //Spesifik olarak errors'a atmak istersen aşağıdakini incele
             //Login işlemi yapmadan bu url'e gidersen hataya atar.
             //Login sonrası admin değilsen ve bu url'e gidersen yine hataya atar.
             //Login sonrası admin isen url'e gider.
-            if (httpContext.Request.Path.ToString().StartsWith("/withrole") && !role.Equals("admin"))
-                httpContext.Response.Redirect("/errors/403");
+            //if (httpContext.Request.Path.ToString().StartsWith("/withrole") && !role.Equals("admin"))
+            //    httpContext.Response.Redirect("/errors/403");
             return _next(httpContext);
         }
     }

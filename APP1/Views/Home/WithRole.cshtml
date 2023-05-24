@@ -34,6 +34,16 @@
                 "delete", "home",
                 new { id = user.Id})
                 </td>
+                <td>
+                    @Html.ActionLink("Increase",
+                "increase", "home",
+                new { id = user.Id})
+                </td>
+                <td>
+                    @Html.ActionLink("Decrease",
+                "decrease", "home",
+                new { id = user.Id})
+                </td>
             </tr>
         }
     </tbody>

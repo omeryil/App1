@@ -25,7 +25,7 @@ namespace APP1.Controllers
 
             return View(us);
         }
-        [Route("/create")]
+        [Route("/register")]
         public IActionResult CreateUser()
         {
           
@@ -93,11 +93,27 @@ namespace APP1.Controllers
         [HttpPost]
         public IActionResult Edit(user user)
         {
+            //db.user.Where(m => m.Id == user.Id).ExecuteUpdate(m=> m.SetProperty(x=>x.roleId,x=>x.roleId-1));
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("withrole");
         }
 
+        [Route("/home/increase/{id?}")]
+        public IActionResult increase(int id)
+        {
+            db.user.Where(m => m.Id == id).ExecuteUpdate(m => m.SetProperty(x => x.roleId, x => x.roleId + 1));
+            db.SaveChanges();
+            return RedirectToAction("withrole");
+        }
+
+        [Route("/home/decrease/{id?}")]
+        public IActionResult decrease(int id)
+        {
+            db.user.Where(m => m.Id == id).ExecuteUpdate(m => m.SetProperty(x => x.roleId, x => x.roleId - 1));
+            db.SaveChanges();
+            return RedirectToAction("withrole");
+        }
 
         public IActionResult Privacy()
         {

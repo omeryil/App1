@@ -7,28 +7,39 @@
     <h1 class="display-4">Welcome</h1>
     
 </div>
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <td>User Id</td>
-            <td>User Name</td>
-            <td>User Pass</td>
-            <td>Name</td>
-            <td>Surname</td>
-            <td>Role Id</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>@user.Id</td>
-                <td>@user.username</td>
-                <td>@user.userpass</td>
-                <td>@user.name</td>
-                <td>@user.surname</td>
-                <td>@user.roleId</td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Users</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>User Id</th>
+                        <th>User Name</th>
+                        <th>User Pass</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Role Id</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.username</td>
+                            <td>@user.userpass</td>
+                            <td>@user.name</td>
+                            <td>@user.surname</td>
+                            <td>@user.roleId</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
