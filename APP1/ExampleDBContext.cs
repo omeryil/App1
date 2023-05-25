@@ -11,5 +11,8 @@ namespace APP1
         public DbSet<user> user { get; set; }
         public DbSet<role> role { get; set; }
         public DbSet<tests> test { get; set; }
+        public DbSet<Uretim> Uretim { get; set; }
+        public DbSet<permission> permission { get; set; }
+        public DbSet<urls> urls { get; set; }
     }
 }

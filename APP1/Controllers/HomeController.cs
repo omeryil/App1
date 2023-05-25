@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace APP1.Controllers
 {
@@ -21,6 +22,17 @@ namespace APP1.Controllers
             {
                 Console.WriteLine("OK");
             }
+            DateTime myDateTime = DateTime.Now;
+
+            
+
+            // Display the name of the current culture.
+            CultureInfo ci = Thread.CurrentThread.CurrentCulture;
+            Debug.WriteLine("Current culture: \"{0}\"\n", ci.Name);
+
+            // Display the long date pattern and string.
+            Debug.WriteLine("Long date pattern: \"{0}\"", ci.DateTimeFormat.LongDatePattern);
+            Debug.WriteLine("Long date string:  \"{0}\"\n", myDateTime.ToLongDateString());
             var us = db.user.ToList();
 
             return View(us);
@@ -125,5 +137,51 @@ namespace APP1.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public ActionResult GetUretim(cinsTurSelected cts)
+        {
+            cinsTurDTO? ct = null;
+            if (cts.cins == null && cts.tur == null)
+            {
+                ct = new cinsTurDTO();
+                ct.cins = db.Uretim.Select(m => m.UrunCinsi).Distinct().ToList();
+                ct.tur = new List<string>();
+                ct.selectedCins = "";
+                ct.selectedTur = "";
+                ct.maxAdet = 0;
+            }
+            else if (cts.cins != null && cts.tur == null)
+            {
+                List<Uretim> uretimList = db.Uretim.Where(m => m.UrunCinsi.Equals(cts.cins)).ToList();
+                ct = new cinsTurDTO();
+                ct.cins = db.Uretim.Select(m => m.UrunCinsi).Distinct().ToList();
+                ct.tur = uretimList.Select(m => m.UrunTuru).Distinct().ToList();
+                ct.selectedCins = cts.cins;
+                ct.selectedTur = "";
+                ct.maxAdet = uretimList.Sum(m => m.UrunMiktari);
+            }
+            else
+            {
+                List<Uretim> uretimList = db.Uretim.Where(m => m.UrunCinsi.Equals(cts.cins)).ToList();
+                ct = new cinsTurDTO();
+                ct.cins = db.Uretim.Select(m => m.UrunCinsi).Distinct().ToList();
+                ct.tur = uretimList.Select(m => m.UrunTuru).Distinct().ToList();
+                ct.selectedCins = cts.cins;
+                ct.selectedTur = cts.tur;
+                ct.maxAdet = db.Uretim.Where(m => m.UrunCinsi.Equals(cts.cins) && m.UrunTuru.Equals(cts.tur)).Sum(m => m.UrunMiktari);
+            }
+            return PartialView("_uretim",ct);
+        }
+        [Route("/uretim")]
+        public IActionResult GetUretim()
+        {
+            cinsTurDTO? ct = new cinsTurDTO();
+            ct.cins = db.Uretim.Select(m => m.UrunCinsi).Distinct().ToList();
+            ct.tur = new List<string>();
+            ct.selectedCins = "";
+            ct.selectedTur = "";
+            ct.maxAdet = 0;
+            return View(ct);
+        }
+
     }
 }

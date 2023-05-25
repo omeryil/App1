@@ -40,22 +40,13 @@ namespace APP1.Controllers
             //user modelinden gelen username ve userpass'i where içerisinde sorguladım.
             // if (u != null) ile boş mu diye check ettim. Değilse Session içerisine yazdım.
             //Bunu da basit olarak session oluşturma olarak görebilirsin.
-            var u =db.user.Where(m => m.username==user.username && m.userpass==user.userpass).Join(db.role, m => m.roleId, n => n.Id, (user, role) => new { User = user, Role = role })
-                   .Select(m => new withRoleDTO()
-                   {
-                       Id = m.User.Id,
-                       username = m.User.username,
-                       userpass = m.User.userpass,
-                       name = m.User.name,
-                       surname = m.User.surname,
-                       role = m.Role.userrole
-                   })
-                   .FirstOrDefault();
+            var u =db.user.Where(m => m.username==user.username && m.userpass==user.userpass)
+                  .FirstOrDefault();
             if (u != null)
             {
-                HttpContext.Session.SetString("role", u.role);
+                HttpContext.Session.SetString("role", u.roleId.ToString());
             }
-            return RedirectToAction("LoginUserPage");
+            return Redirect("~/");
         }
     }
 }
